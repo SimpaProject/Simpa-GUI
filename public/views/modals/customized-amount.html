@@ -1,0 +1,64 @@
+<div class="modal-content fix-modals-touch specAmount">
+  <a class="close_modal" ng-click="cancel()"><svg-icon title="close"></svg-icon></a>
+
+  <div class="modal-content-header">
+      <!--<svg-icon title="dag-symbol" ng-show="!amountInSmallestUnits"></svg-icon>-->
+      <h3 translate>Request specific amount</h3>
+  </div>
+
+  <div ng-show="amountInSmallestUnits">
+  <h4 class="title no-margin" translate>QR Code</h4>
+  <ul class="no-bullet size-14 m0">
+    <li class="line-b p10 oh text-center">
+      <dag-qr-code url="{{protocol}}:{{addr + '?amount=' + amountInSmallestUnits + asset_param}}"></dag-qr-code>
+      <div class="m10t text-center" ng-show="isCordova">
+        <span class="button outline dark-gray tiny round"
+              ng-click="shareAddress(addr, amountInSmallestUnits / unitValue)">
+          <span translate>Share address</span>
+          <i class="fi-share rotate-180"></i>
+        </span>
+      </div>
+    </li>
+  </ul>
+  <h4 class="title no-margin" translate>Details</h4>
+  <ul class="no-bullet size-14 m0">
+    <li class="line-b p10 oh">
+    <span class="text-gray" translate>Address</span>: <br/>
+    <span>
+     {{addr}}
+    </span>
+    </li>
+    <li class="line-b p10 oh">
+    <span class="text-gray" translate>Amount</span>: <br/>
+    <span>
+      {{customizedAmountUnit}}
+    </span>
+    </li>
+  </ul>
+  </div>
+  <div ng-show="!amountInSmallestUnits" class="row m20t">
+    <div class="large-12 large-centered columns">
+      <form name="amountForm" ng-submit="submitForm(amountForm)" class="form-wrap" novalidate>
+        <div class="form-group">
+          <div class="input-wrap input-icon">
+            <input type="number" id="amount" name="amount"
+            ng-class="{'error': amountForm.amount.$invalid && !amountForm.amount.$error.required, 'success': !amountForm.amount.$invalid}"
+            ng-attr-placeholder="{{'Amount'|translate}}"
+            ng-model="_customAmount" required autocomplete="off"
+            min="0.000001" ng-minlength="1" ng-maxlength="16" input-validator>
+            <!--<svg class="icon icon-d">-->
+              <!--<use xlink:href="img/svg/input_main_icon"></use>-->
+            <!--</svg>-->
+            <svg-icon>
+            <img class="input_icons" src="../../../../../public/img/svg/input_icon.svg" alt="input_icon">
+            </svg-icon>
+          </div>
+        </div>
+        <button type="submit" class="btn btn_red-full" ng-disabled="amountForm.$invalid" translate>
+          {{buttonLabel}}
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>

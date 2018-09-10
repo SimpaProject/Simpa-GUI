@@ -1,0 +1,82 @@
+@import "../../../../css/variables";
+
+.chats{
+  .no_devices_message{
+    padding: 45px;
+    .circles-ground {
+      img {
+        position: absolute;
+        top: -85px;
+        right: -31px;
+      }
+    }
+    .circles-ground-2{
+      img{
+        position: absolute;
+        left: -30px;
+        top: -1px;
+      }
+    }
+    .circles-ground-3{
+      img{
+        position: absolute;
+        right: -30px;
+        bottom: -129px;
+      }
+    }
+  }
+
+  .correspondentList{
+    margin: 30px;
+    margin-bottom: 5px;
+
+    li{
+      margin-bottom: 30px;
+      position: relative;
+
+      &:last-child{
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.no_devices_message {
+  @extend .slideInDown;
+  margin: 30px;
+  margin-top: 40px;
+  text-align: center;
+  padding: 30px;
+  background: transparent;
+  border-radius: 10px;
+
+  &.ng-leave {
+    display: none;
+  }
+
+  svg {
+    color: $gray;
+    width: 100px;
+    height: 100px;
+  }
+
+  p {
+    color: $gray;
+    font-size: 14px;
+    line-height: 18px;
+    margin: 20px 0;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    svg-icon.svg-icon-star_border {
+      svg {
+        position: relative;
+        top: -1px;
+        margin: 0 5px;
+      }
+    }
+  }
+}

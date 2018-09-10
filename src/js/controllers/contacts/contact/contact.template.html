@@ -1,0 +1,49 @@
+<dag-nav-bar title="{{ 'Contact' | translate }}" invert>
+  <div class="navbar-container-triggers navbar-container-triggers-right">
+    <a ng-click="contact.editContact()">
+      <svg-icon name="more_horiz"></svg-icon>
+    </a>
+  </div>
+</dag-nav-bar>
+
+<div class="content contact dag-scroll">
+  <div class="contact_card">
+    <div class="contact_meta">
+      <div class="avatar"></div>
+      <div class="contact_meta_full_name">{{contact.data.first_name}} {{contact.data.last_name}}</div>
+      <div class="contact_meta_triggers" style="display: none">
+        <ul>
+          <li>
+            <svg-icon name="paper-plane-o"></svg-icon>
+            <span translate>Send</span>
+          </li>
+          <li>
+            <svg-icon name="timeline"></svg-icon>
+            <span translate>History</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="contact_info">
+      <ul>
+        <li ng-if="contact.data.address">
+          <div class="contact_info_key" translate>address</div>
+          <div class="contact_info_value">{{contact.data.address}}</div>
+        </li>
+        <li ng-if="contact.data.email">
+          <div class="contact_info_key" translate>email</div>
+          <div class="contact_info_value">{{contact.data.email}}</div>
+        </li>
+        <li ng-if="contact.data.description">
+          <div class="contact_info_key" translate>description</div>
+          <div class="contact_info_value">{{contact.data.description}}</div>
+        </li>
+        <li class="contact_action">
+          <button class="btn btn_red-full" ng-click="contact.sendPayment()" translate>
+            <span class="ng-scope">Send</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

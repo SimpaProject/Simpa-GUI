@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=SimpaWallet
+Comment=A wallet for decentralized value
+Exec=bash -c 'cd $(dirname %k) && ./SimpaWallet %u'
+Icon=icon-white-outline.iconset/icon_256x256.png
+Terminal=false
+Categories=Office;Finance;
+MimeType=x-scheme-handler/simpa-wallet-tn;
+X-Ubuntu-Touch=true
+X-Ubuntu-StageHint=SideStage
+

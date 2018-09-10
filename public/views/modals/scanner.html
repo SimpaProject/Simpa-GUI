@@ -1,0 +1,12 @@
+<div class="modal-content text-center fix-modals-touch" ng-init="init()">
+  <a class="close_modal" ng-click="cancel()">
+    <svg-icon title="close"></svg-icon>
+  </a>
+
+  <div class="modal-content-header">
+    <h3 translate>Scan QR Code</h3>
+  </div>
+  <canvas id="qr-canvas" width="200" height="150"></canvas>
+  <div id="qr-scanner-camera-border"></div>
+  <video id="qrcode-scanner-video" width="300" height="225"></video>
+</div>

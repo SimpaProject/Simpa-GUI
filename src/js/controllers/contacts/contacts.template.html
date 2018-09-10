@@ -1,0 +1,106 @@
+<dag-nav-bar title="{{ 'Address Book' | translate }}" invert>
+  <a title="{{ 'Add new contact' | translate }}" dag-state-transition="slide-left" ui-sref="new_contact">
+    <!--<svg-icon name="add"></svg-icon>-->
+    <img src="../../../../public/img/svg/adding_new_icon.svg" alt="adding_new_icon">
+  </a>
+</dag-nav-bar>
+
+<div class="content contacts newContacts" ng-class="{'no_contacts' : !contacts.existsAnyContact}">
+  <div class="swiper_tabs_menu" ng-if="contacts.existsAnyContact">
+    <div class="shadow" ng-class="{'active': contacts.activeTab(0)}"></div>
+    <ul>
+      <li class="left" ng-class="{'active': contacts.activeTab(0)}" ng-click="contacts.swiper.slideTo(0)">
+        <svg-icon name="contacts_card"></svg-icon>
+        <span>{{ 'contacts' | translate }}</span>
+        <div>
+        </div>
+      </li>
+      <li class="right" ng-class="{'active': contacts.activeTab(1)}" ng-click="contacts.swiper.slideTo(1)">
+        <svg-icon name="favorites_contacts"></svg-icon>
+        <span>{{ 'favorites' | translate }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-if="contacts.showSearchBox" class="input-wrap input-icon search-container">
+    <input type="text" ng-model="contacts.search" id="search" name="search" ng-attr-placeholder="{{'Search' | translate}}">
+    <a>
+      <i class="icon icon-d fi-magnifying-glass"></i>
+    </a>
+  </div>
+
+  <div ng-if="!contacts.existsAnyContact" class="no_contacts_message">
+    <svg-icon name="agenda"></svg-icon>
+    <p translate>Search result is empty or you don't have any contacts in your address book.</p>
+    <p translate>Press "+" in the right upper corner to add new contact.</p>
+  </div>
+
+  <ks-swiper-container ng-if="contacts.existsAnyContact" pagination-is-active="false"
+                       swiper="swiper"
+                       on-ready="contacts.onReadySwiper(swiper)"
+                       override-parameters="{'slidesPerView': 1, 'spaceBetween': 0, 'centeredSlides': true}">
+    <ks-swiper-slide class="swiper-slide">
+      <div class="contacts_list dag-scroll">
+        <div class="contacts_list_group" ng-repeat="(letter, list) in contacts.list">
+          <h4 class="contacts_list_letter">{{letter}}</h4>
+          <table>
+            <tbody>
+            <tr ng-repeat="contact in list">
+              <td class="contacts_list_contact_info">
+                <div class="avatar"></div>
+                <a class="contacts_list_contact_info_full_name" ui-sref="contact({address: '{{contact.address}}'})">{{contact.first_name}}
+                  {{contact.last_name}}</a>
+              </td>
+              <td class="contacts_list_contact_favorite" ng-click="contacts.toggleFavorite(contact)">
+                <div class="contacts_list_contact_favorite_trigger" ng-class="{'selected' : contact.favorite}">
+                  <svg-icon name="star"></svg-icon>
+                  <svg-icon name="star_border"></svg-icon>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="no_contacts_message" ng-if="contacts.listTotal == 0">
+          <p translate>No contact</p>
+        </div>
+      </div>
+    </ks-swiper-slide>
+    <ks-swiper-slide class="swiper-slide">
+      <div class="contacts_list dag-scroll" ng-if="contacts.existsAnyFavContact" ng-scrollbars>
+        <div class="contacts_list_group" ng-repeat="(letter, list) in contacts.favoriteList">
+          <h4 class="contacts_list_letter">{{letter}}</h4>
+          <table>
+              <tbody>
+              <tr ng-repeat="contact in list">
+                <td class="contacts_list_contact_info">
+                  <div class="avatar"></div>
+                  <a class="contacts_list_contact_info_full_name" ui-sref="contact({address: '{{contact.address}}'})">{{contact.first_name}}
+                    {{contact.last_name}}</a>
+                </td>
+                <td class="contacts_list_contact_favorite" ng-click="contacts.toggleFavorite(contact)">
+                  <div class="contacts_list_contact_favorite_trigger" ng-class="{'selected' : contact.favorite}">
+                    <svg-icon name="star"></svg-icon>
+                    <svg-icon name="star_border"></svg-icon>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+          </table>
+        </div>
+        <div class="no_contacts_message" ng-if="contacts.favoriteListTotal == 0">
+          <p translate>No contact</p>
+        </div>
+      </div>
+      <div class="no_contacts_message" ng-if="!contacts.existsAnyFavContact">
+        <svg-icon name="favorite_star"></svg-icon>
+        <p>You don't have any favorite contacts selected.</p>
+        <p class="select-contact-text">To select a favorite contact press "+" next to contact's name.</p>
+        <div class="circles-ground"><img src="../../../../public/img/svg/circle-1.svg" alt="circle"></div>
+        <div class="circles-ground-2"><img src="../../../../public/img/svg/circles-ground-2.svg" alt="circle"></div>
+        <div class="circles-ground-3"><img src="../../../../public/img/svg/circles-ground-3.svg" alt="circle"></div>
+      </div>
+    </ks-swiper-slide>
+  </ks-swiper-container>
+
+</div>

@@ -1,0 +1,30 @@
+<div class="modal-content fix-modals-touch">
+  <a class="close_modal" ng-click="cancel()"><svg-icon title="close"></svg-icon></a>
+  
+  <div class="modal-content-header">
+      <h3 translate>Select subwallet</h3>
+  </div>
+
+	<ul class="no-bullet subwallets">
+		<li class="line-b" ng-class="{'selected': !indexCtl.shared_address}">
+			<a ng-click="selectSubwallet()" class="db oh">
+				<div class="avatar-wallet" style="background-color: #d52026;">{{(indexCtl.alias || indexCtl.walletName) | limitTo: 1}}</div>
+				<div class="ellipsis name-wallet text-bold">{{(indexCtl.alias || indexCtl.walletName)}}</div>
+				<div class="size-12">
+					<span>{{mainWalletBalanceInfo.totalStr}} DAG</span>
+				</div>
+			</a>
+		</li>
+		<li class="line-b" ng-repeat="sw in arrSharedWallets" ng-class="{'selected': sw.shared_address == indexCtl.shared_address}" style="margin-left: 20px">
+			<a ng-click="selectSubwallet(sw.shared_address)" class="db oh">
+				<div class="avatar-wallet" style="background-color: #d52026;">{{sw.shared_address | limitTo: 1}}</div>
+				<div class="ellipsis name-wallet text-bold">{{sw.shared_address}}</div>
+				<div class="size-12">
+					<span>{{sw.totalStr}} DAG</span>
+				</div>
+			</a>
+		</li>
+	</ul>
+
+
+</div>

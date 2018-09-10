@@ -1,0 +1,58 @@
+<dag-nav-bar title="{{ 'Global preferences' | translate }}" invert></dag-nav-bar>
+
+<div class="content preferences dag-scroll new-pref">
+
+  <div class="dag_tip no_icon backup_error" ng-show="index.needsBackup">
+    <h4 class="ng-binding waller-backup-text">Wallet backup</h4>
+    <p class="ng-binding security-text">For security reasons we strongly recommend you to back your wallet seed up as soon as possible.</p>
+    <a ng-click="index.navigateSecure('backup')">Back Up</a>
+  </div>
+
+  <h4 translate>General</h4>
+  <ul class="preferences_links">
+    <li ui-sref="system" dag-state-transition="slide-left" dag-right-icon="chevron-thin-right">
+      <img src="../../../../../public/img/svg/general_setting_status.svg" alt="status_icon">
+      <div class="preferences-menu-textWrap">
+        <div class="settings-name" translate>System</div>
+        <div class="description" translate>Setup your wallets.</div>
+      </div>
+    </li>
+
+    <li ui-sref="security" dag-state-transition="slide-left"  dag-right-icon="chevron-thin-right">
+      <img src="../../../../../public/img/svg/general_settings_security.svg" alt="security_icon">
+      <div class="preferences-menu-textWrap">
+        <div class="settings-name" translate>Security</div>
+        <div class="description" translate>Backup your wallets and configure restrictions.</div>
+      </div>
+    </li>
+
+    <li ui-sref="notifications" dag-left-icon="notifications" dag-right-icon="chevron-thin-right"
+        ng-if="index.pushIsAvailableOnSystem">
+      <div class="preferences-menu-textWrap">
+        <div class="settings-name" translate>Notifications</div>
+        <div class="description" translate>Configure notifications</div>
+      </div>
+    </li>
+
+  </ul>
+
+  <h4 translate>Other</h4>
+  <ul class="preferences_links">
+    <li ui-sref="aboutDevice" dag-state-transition="slide-left"  dag-right-icon="chevron-thin-right">
+        <img src="../../../../../public/img/svg/general_settings_about_device.svg" alt="about_device_icon">
+      <div class="preferences-menu-textWrap">
+        <div class="settings-name" translate>About Device</div>
+        <div class="description" translate>Information about device in use.</div>
+      </div>
+    </li>
+    <li ui-sref="about" dag-state-transition="slide-left" dag-right-icon="chevron-thin-right">
+        <img src="../../../../../public/img/svg/general_settings_about_simpa-wallet.svg" alt="about_simpa-wallet_icon">
+      <div class="preferences-menu-textWrap">
+        <div class="settings-name" translate>About SimpaWallet</div>
+        <div class="description" translate>Information about changes and app in general.</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="extra-margin-bottom"></div>
+</div>

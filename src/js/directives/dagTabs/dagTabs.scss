@@ -1,0 +1,87 @@
+@import "../../../css/variables";
+
+.dag_tabs {
+  position: relative;
+  .dag_tabs_list {
+    position: relative;
+
+    .dag_tab {
+      display: block;
+    }
+
+    > .dag_tabs_slider {
+      position: absolute;
+      left: 0;
+      height: 2px;
+      width: 0;
+      bottom: 0;
+      background: $main_color;
+      transform: translate3d(0, 0, 0);
+    }
+
+    > ul {
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+      //padding: 0 15px;
+      //border-bottom: 1px solid #eee;
+    }
+
+    .dag_tabs_list_link {
+      flex: 1;
+      &:not(.active) {
+        background: #f5f5f5;
+        box-shadow: inset -1px -2px 1px 0 #ddd;
+      }
+      a {
+        text-align: center;
+        display: block;
+        padding: 15px 0;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: #000;
+        opacity: 0.5;
+      }
+
+      &.active {
+        box-shadow:inset -1px 1px 3px 0 #ddd;
+        a {
+          opacity: 1;
+          color: $violet;
+          //border-bottom: 2px solid $main_color;
+        }
+      }
+    }
+  }
+
+  .dag_tabs_tabpanel {
+    padding: 15px;
+    position: relative;
+  }
+
+  &.invert {
+    .dag_tabs_list {
+      > ul {
+        border-bottom: none;
+        @include gradientBackground($main_color, darken($main_color, 5), top, bottom);
+      }
+    }
+
+    .dag_tabs_list_link {
+      a {
+        color: #fff;
+      }
+
+      &:not(.active) {
+        background: #f5f5f5;
+      }
+
+      &.active {
+        a {
+          border-bottom-color: #fff;
+        }
+      }
+    }
+  }
+}

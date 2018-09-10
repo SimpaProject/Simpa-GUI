@@ -1,0 +1,571 @@
+/* eslint-disable */
+module.exports = function (grunt) {
+  function getPlatform() {
+    switch (process.platform) {
+      case 'win32':
+        return 'win'; // change to 'win' for both 32 and 64
+      case 'linux':
+        return 'linux64';
+      case 'darwin':
+        return 'osx64';
+      default:
+        throw Error(`unknown platform ${process.platform}`);
+    }
+  }
+
+  // Project Configuration
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    env: {
+      options: {},
+      testnet: {
+        // nwjs task
+        nwjsAppName: 'SimpaWallet-tn',
+        nwjsFlavor: 'sdk',
+        nwjsCFBundleURLName: 'SimpaWallet-tn action',
+        nwjsCFBundleURLScheme: 'TRFWALLET-TN',
+
+        // inno setup
+        innosetupTemplateMyAppName: 'SimpaWallet-tn',
+        innosetupTemplateMyAppPackageName: 'SimpaWallet-tn',
+        innosetupTemplateMyAppVersion: '<%= pkg.version %>',
+        innosetupTemplateMyAppExeName: 'SimpaWallet-tn.exe',
+        innosetupTemplateMyAppFolderName: 'SimpaWallet-tn'
+      },
+      live: {
+        // nwjs task
+        nwjsAppName: 'SimpaWallet',
+        nwjsFlavor: 'normal',
+        nwjsCFBundleURLName: 'SimpaWallet action',
+        nwjsCFBundleURLScheme: 'TRFWALLET',
+
+        // inno setup
+        innosetupTemplateMyAppName: 'SimpaWallet',
+        innosetupTemplateMyAppPackageName: 'SimpaWallet',
+        innosetupTemplateMyAppVersion: '<%= pkg.version %>',
+        innosetupTemplateMyAppExeName: 'SimpaWallet.exe',
+        innosetupTemplateMyAppFolderName: 'SimpaWallet'
+      },
+      functions: {}
+    },
+    template: {
+      'process-html-template': {
+        options: {
+          data: {
+            myAppName: '<%= process.env.innosetupTemplateMyAppName %>',
+            myAppPackageName: '<%= process.env.innosetupTemplateMyAppPackageName %>',
+            myAppVersion: '<%= process.env.innosetupTemplateMyAppVersion %>',
+            myAppExeName: '<%= process.env.innosetupTemplateMyAppExeName %>',
+            myAppFolderName: '<%= process.env.innosetupTemplateMyAppFolderName %>'
+          }
+        },
+        files: {
+          'webkitbuilds/setup-win64.iss': ['webkitbuilds/setup-win64.iss.tpl'],
+          'webkitbuilds/setup-win32.iss': ['webkitbuilds/setup-win32.iss.tpl']
+        }
+      }
+    },
+
+    ngtemplates: {
+      copayApp: {
+        cwd: 'src/js',
+        src: '**/**.html',
+        dest: 'public/templates.js',
+        options: {
+          htmlmin: {
+            collapseBooleanAttributes: true,
+            collapseWhitespace: true,
+            keepClosingSlash: true,
+            removeAttributeQuotes: true,
+            removeComments: true,
+            removeEmptyAttributes: true,
+            removeRedundantAttributes: false,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true
+          }
+        }
+      }
+    },
+
+    exec: {
+      version: {
+        command: 'node ./util/version.js'
+      },
+      clear: {
+        command: 'rm -Rf bower_components node_modules'
+      },
+      osx64: {
+        command: '../byteballbuilds/build-osx.sh osx64 <%= pkg.name %>'
+      },
+      osx32: {
+        command: '../byteballbuilds/build-osx.sh osx32 <%= pkg.name %>'
+      },
+      nwBackground: {
+        command: 'nw . &'
+      }
+    },
+
+    sass: {
+      main: {
+        options: {
+          style: 'compressed',
+          sourcemap: 'none'
+        },
+        files: {
+          'src/css/main.css': 'src/css/main.scss'
+        }
+      },
+      components: {
+        options: {
+          style: 'compressed',
+          sourcemap: 'none'
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'src/js/',
+            src: ['**/*.scss'],
+            dest: 'src/js/',
+            ext: '.css'
+          }
+        ]
+      }
+    },
+
+    postcss: {
+      options: {
+        map: true, // inline sourcemaps
+
+        processors: [
+          require('pixrem')(), // add fallbacks for rem units
+          require('postcss-merge-idents')(),
+          require('postcss-clean')(),
+          require('autoprefixer')({
+            browsers: 'last 4 versions'
+          }),
+          require('cssnano')() // minify the result
+        ]
+      },
+      dist: {
+        src: 'public/css/simpa-wallet.css'
+      }
+    },
+
+    stylelint: {
+      all: ['src/css/*.scss', 'src/js/**/*.scss']
+    },
+
+    concat: {
+      options: {
+        sourceMap: false,
+        sourceMapStyle: 'link' // embed, link, inline
+      },
+      angular: {
+        src: [
+          'bower_components/es5-shim/es5-shim.min.js',
+          'bower_components/es5-shim/es5-sham.min.js',
+          'bower_components/es6-shim/es6-shim.min.js',
+          'bower_components/es6-shim/es6-sham.min.js',
+          'bower_components/jquery/dist/jquery.min.js',
+          'bower_components/fastclick/lib/fastclick.js',
+          'bower_components/qrcode-generator/js/qrcode.js',
+          'bower_components/qrcode-decoder-js/lib/qrcode-decoder.js',
+          'bower_components/moment/min/moment-with-locales.js',
+          'bower_components/angular/angular.js',
+          'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
+          'bower_components/angular-ui-router/release/angular-ui-router.js',
+          'bower_components/angular-foundation/mm-foundation-tpls.js',
+          'bower_components/angular-moment/angular-moment.js',
+          'bower_components/ng-lodash/build/ng-lodash.js',
+          'bower_components/angular-qrcode/angular-qrcode.js',
+          'bower_components/angular-gettext/dist/angular-gettext.js',
+          'bower_components/angular-ui-switch/angular-ui-switch.js',
+          'bower_components/angular-elastic/elastic.js',
+          'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
+          'bower_components/raven-js/dist/raven.js',
+          'bower_components/raven-js/dist/plugins/angular.js',
+          'bower_components/ng-dialog/js/ngDialog.min.js',
+          'bower_components/angular-animate/angular-animate.js',
+          'bower_components/gsap/src/minified/TweenMax.min.js',
+          'bower_components/angular-long-press/dist/angular-long-press.min.js',
+
+          /* Angular-Swipe | Swipes gestures library (e.g ng-swipe-up) */
+          'bower_components/angular-swipe/dist/angular-swipe.min.js',
+
+          /* Angular-Swiper | AngularJS Carousel directive (e.g <ks-swiper-container></ks-swiper-container>) */
+          'bower_components/swiper/dist/js/swiper.min.js',
+          'bower_components/angular-swiper/dist/angular-swiper.js'
+        ],
+        dest: 'public/angular.js'
+      },
+      js: {
+        src: [
+          'angular-bitcore-wallet-client/index.js',
+          'src/js/app.js',
+          'src/js/routes.js',
+          'src/js/directives/**/*.js',
+          'src/js/filters/**/*.js',
+          'src/js/models/**/*.js',
+          'src/js/services/**/*.js',
+          'src/js/factories/**/*.js',
+          'src/js/controllers/**/*.js',
+          'src/js/version.js',
+          'src/js/init.js',
+          'src/js/live-reload.js',
+          '!src/js/**/*.spec.js'
+        ],
+        dest: 'public/simpa-wallet.js'
+      },
+      constants: {
+        src: ['src/js/config.js'],
+        dest: 'public/config.js'
+      },
+      css: {
+        src: ['src/css/*.css', 'src/js/**/*.css'],
+        dest: 'public/css/simpa-wallet.css'
+      },
+      foundation: {
+        src: [
+          'bower_components/angular/angular-csp.css',
+          'bower_components/animate.css/animate.css',
+          'bower_components/foundation/css/foundation.css',
+          'bower_components/angular-ui-switch/angular-ui-switch.css',
+          'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css'
+        ],
+        dest: 'public/css/foundation.css'
+      },
+      cssVendors: {
+        src: [
+          'bower_components/angular/angular-csp.css',
+          'bower_components/animate.css/animate.css',
+          'bower_components/angular-ui-switch/angular-ui-switch.css',
+          'bower_components/angular-carousel/dist/angular-carousel.css',
+          'bower_components/ng-dialog/css/ngDialog.min.css',
+          'bower_components/swiper/dist/css/swiper.min.css'
+        ],
+        dest: 'public/css/vendors.css'
+      }
+    },
+    uglify: {
+      options: {
+        mangle: false
+      },
+      prod: {
+        files: {
+          'public/simpa-wallet.js': ['public/simpa-wallet.js'],
+          'public/angular.js': ['public/angular.js']
+        }
+      }
+    },
+    nggettext_extract: {
+      pot: {
+        files: {
+          'i18n/po/template.pot': [
+            'public/index.html',
+            'public/views/*.html',
+            'public/views/**/*.html',
+            'src/js/routes.js',
+            'src/js/services/*.js',
+            'src/js/controllers/*.js'
+          ]
+        }
+      }
+    },
+    nggettext_compile: {
+      all: {
+        options: {
+          format: 'json',
+          module: 'copayApp'
+        },
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: 'i18n/po',
+            dest: 'public/languages',
+            src: ['*.po'],
+            ext: '.json'
+          }
+        ]
+      }
+    },
+    copy: {
+      icons: {
+        expand: true,
+        flatten: true,
+        src: 'bower_components/foundation-icon-fonts/foundation-icons.*',
+        dest: 'public/icons/'
+      },
+      osx: {
+        expand: true,
+        flatten: true,
+        options: { timestamp: true, mode: true },
+        src: ['webkitbuilds/build-osx.sh', 'webkitbuilds/Background.png'],
+        dest: '../byteballbuilds/'
+      },
+      linux: {
+        options: { timestamp: true, mode: true },
+        files: [
+          {
+            expand: true,
+            cwd: './webkitbuilds/',
+            src: ['simpa-wallet.desktop', '../public/img/icons/icon-white-outline.iconset/icon_256x256.png'],
+            dest: '../byteballbuilds/<%= process.env.nwjsAppName %>/linux32/',
+            flatten: true,
+            filter: 'isFile',
+            options: { timestamp: true, mode: true }
+          },
+          {
+            expand: true,
+            cwd: './webkitbuilds/',
+            src: ['simpa-wallet.desktop', '../public/img/icons/icon-white-outline.iconset/icon_256x256.png'],
+            dest: '../byteballbuilds/<%= process.env.nwjsAppName %>/linux64/',
+            flatten: true,
+            filter: 'isFile',
+            options: { timestamp: true, mode: true }
+          }
+        ]
+      }
+    },
+    karma: {
+      unit: {
+        configFile: 'test/karma.conf.js',
+        singleRun: true
+      },
+      prod: {
+        configFile: 'test/karma.conf.js',
+        singleRun: false
+      }
+    },
+    coveralls: {
+      options: {
+        debug: false,
+        coverageDir: 'coverage/report-lcov',
+        dryRun: true,
+        force: true,
+        recursive: false
+      }
+    },
+    ngconstant: {
+      options: {
+        // Name of our Angular module with configuration data.
+        name: 'config',
+        // Place where we need to create new file with our config module.
+        dest: './src/js/config.js',
+        // Template to create config module.
+        template: grunt.file.read('./environments/constant-template.ejs')
+      },
+      // Environments
+      testnet: {
+        constants: './environments/testnet.json'
+      },
+      live: {
+        constants: './environments/live.json'
+      }
+    },
+    nwjs: {
+      options: {
+        // platforms: ['win','osx64','linux'],
+        // platforms: ['osx64'],
+        platforms: [getPlatform()],
+        appName: '<%= process.env.nwjsAppName %>',
+        flavor: '<%= process.env.nwjsFlavor %>',
+        buildDir: '../byteballbuilds',
+        version: '0.24.3',
+        zip: false,
+        macIcns: './public/img/icons/icon-white-outline.icns',
+        winIco: './public/img/icons/simpa-wallet.ico',
+        exeIco: './public/img/icons/simpa-wallet.ico',
+        macPlist: {
+          CFBundleURLTypes: [{
+            CFBundleURLName: '<%= process.env.nwjsCFBundleURLName %>',
+            CFBundleURLSchemes: ['<%= process.env.nwjsCFBundleURLSchemes %>']
+          }],
+          LSHasLocalizedDisplayName: 0
+          /* CFBundleIconFile: 'nw.icns', */
+        }
+      },
+      src: ['./package.json', './public/**/*', './angular-bitcore-wallet-client/**/*']
+    },
+    compress: {
+      linux32: {
+        options: {
+          archive: '../byteballbuilds/<%= process.env.nwjsAppName %>-linux64.zip'
+        },
+        expand: true,
+        cwd: '../byteballbuilds/<%= process.env.nwjsAppName %>/linux64/',
+        src: ['**/*']
+      },
+      linux64: {
+        options: {
+          archive: '../byteballbuilds/<%= process.env.nwjsAppName %>-linux64.zip'
+        },
+        expand: true,
+        cwd: '../byteballbuilds/<%= process.env.nwjsAppName %>/linux64/',
+        src: ['**/*']
+      }
+    },
+    browserify: {
+      dist: {
+        options: {
+          transform: [['babelify', { presets: ['es2015'], compact: false }]],
+          exclude: ['sqlite3', 'nw.gui', 'mysql', 'ws', 'regedit', 'fsevents']
+        },
+        src: 'public/simpa-wallet.js',
+        dest: 'public/simpa-wallet.js'
+      }
+    },
+    // .deb proved to be very slow to produce and install: lintian spends a lot of time verifying a .bin file
+    debian_package: {
+      linux64: {
+        files: [
+          {
+            expand: true,
+            cwd: '../byteballbuilds/simpa-wallet-test/linux64/',
+            src: ['**/*'],
+            dest: '/opt/simpa-wallet-test/'
+          }
+          // {expand: true, cwd: '../byteballbuilds/byteball-test/linux64', src: ['simpa-wallet.desktop'], dest: '/usr/share/applications/byteball-test.desktop'}
+        ],
+        options: {
+          maintainer: {
+            name: 'SimpaWallet',
+            email: 'byteball@byteball.org'
+          },
+          long_description: 'A wallet for decentralized value',
+          target_architecture: 'amd64'
+        }
+      }
+    },
+    innosetup_compiler: {
+      win64: {
+        options: {
+          gui: false,
+          verbose: false
+        },
+        script: 'webkitbuilds/setup-win64.iss'
+      },
+      win32: {
+        options: {
+          gui: false,
+          verbose: false
+        },
+        script: 'webkitbuilds/setup-win32.iss'
+      }
+    },
+    svgmin: {
+      options: {
+        plugins: [
+          {
+            removeViewBox: false
+          }, {
+            removeUselessStrokeAndFill: true
+          }, {
+            removeEmptyAttrs: true
+          }
+        ]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'src/css/svg/',
+          src: ['*.svg'],
+          dest: 'public/css/svg/'
+        }]
+      }
+    },
+    watch: {
+      options: {
+        dateFormat(time) {
+          grunt.log.writeln(`The watch finished in ${time}ms at ${(new Date()).toString()}`);
+          grunt.log.writeln('Please ' + 'Reload app'.yellow + ' from browser');
+          grunt.log.writeln('Waiting for more changes...');
+        }
+      },
+      svg: {
+        files: ['src/css/svg/*.svg'],
+        tasks: ['svgmin']
+      },
+      sass: {
+        files: ['src/css/**/*.scss', 'src/css/icons.css'],
+        tasks: ['sass', 'concat:css', 'postcss']
+      },
+      components: {
+        files: ['src/js/**/*.scss'],
+        tasks: ['sass:components', 'concat:css', 'postcss']
+      },
+      html_templates: {
+        files: ['src/js/**/*.html'],
+        tasks: ['ngtemplates']
+      },
+      main: {
+        files: [
+          'src/js/init.js',
+          'src/js/app.js',
+          'src/js/directives/**/*.js',
+          'src/js/factories/**/*.js',
+          'src/js/filters/**/*.js',
+          'src/js/routes.js',
+          'src/js/services/**/*.js',
+          'src/js/models/**/*.js',
+          'src/js/controllers/**/*.js'
+        ],
+        tasks: ['concat:js'/* , 'karma:prod' */]
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-template');
+  grunt.loadNpmTasks('grunt-env');
+  grunt.loadNpmTasks('grunt-svgmin');
+  grunt.loadNpmTasks('grunt-babel');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-angular-gettext');
+  grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-karma-coveralls');
+  grunt.loadNpmTasks('grunt-ng-constant');
+  grunt.loadNpmTasks('grunt-nw-builder');
+  grunt.loadNpmTasks('grunt-contrib-compress');
+  // grunt.loadNpmTasks('grunt-debian-package');
+  grunt.loadNpmTasks('innosetup-compiler');
+  grunt.loadNpmTasks('grunt-angular-templates');
+
+  grunt.loadNpmTasks('grunt-stylelint');
+  grunt.loadNpmTasks('grunt-postcss');
+  grunt.loadNpmTasks('grunt-contrib-sass');
+
+  grunt.registerTask('dev', ['build', 'exec:nwBackground', 'watch']);
+  grunt.registerTask('build', (target) => {
+    var ngconstantTask = 'ngconstant:testnet';
+    if (target === 'live') {
+      ngconstantTask = 'ngconstant:live';
+    }
+    grunt.task.run([ngconstantTask, 'copy', 'ngtemplates', 'nggettext_compile', 'exec:version', 'stylelint', 'sass', 'concat', 'postcss', 'svgmin']);
+  });
+  grunt.registerTask('default', ['build']);
+  grunt.registerTask('cordova:testnet', ['build', 'browserify']);
+  grunt.registerTask('cordova:live', ['build:live', 'browserify']);
+  grunt.registerTask('cordova-prod', ['cordova', 'uglify']);
+  // grunt.registerTask('prod', ['default', 'uglify']);
+  grunt.registerTask('translate', ['nggettext_extract']);
+  grunt.registerTask('test', ['karma:prod']);
+  grunt.registerTask('test-coveralls', ['karma:unit', 'coveralls']);
+  // grunt.registerTask('desktop', ['prod', 'nwjs', 'copy:linux', 'compress:linux32', 'compress:linux64', 'copy:osx', 'exec:osx32', 'exec:osx64']);
+  grunt.registerTask('desktop:testnet', ['env:testnet', 'build', 'nwjs']);
+  grunt.registerTask('desktop:live', ['env:live', 'build:live', 'nwjs']);
+  grunt.registerTask('dmg', ['copy:osx', 'exec:osx64']);
+  grunt.registerTask('linux64:testnet', ['env:testnet', 'template', 'copy:linux', 'compress:linux64']);
+  grunt.registerTask('linux64:live', ['env:live', 'template', 'copy:linux', 'compress:linux64']);
+  grunt.registerTask('linux32:testnet', ['env:testnet', 'template', 'copy:linux', 'compress:linux32']);
+  grunt.registerTask('linux32:live', ['env:live', 'template', 'copy:linux', 'compress:linux32']);
+  grunt.registerTask('deb', ['debian_package:linux64']);
+  grunt.registerTask('inno64:testnet', ['env:testnet', 'template', 'innosetup_compiler:win64']);
+  grunt.registerTask('inno64:live', ['env:live', 'template', 'innosetup_compiler:win64']);
+  grunt.registerTask('inno32:testnet', ['env:testnet', 'template', 'innosetup_compiler:win32']);
+  grunt.registerTask('inno32:live', ['env:live', 'template', 'innosetup_compiler:win32']);
+};

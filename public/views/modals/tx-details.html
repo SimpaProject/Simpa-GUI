@@ -1,0 +1,151 @@
+<div class="modal-content fix-modals-touch animated fasten slideInDown transactions_details">
+
+  <a class="close_modal" ng-click="cancel()">
+    <p>Close</p>
+  </a>
+
+  <!--<div class="modal-content-header">-->
+    <!--<svg-icon title="credit-card"></svg-icon>-->
+  <!--</div>-->
+
+  <div class="modal-content-body dag-scroll newModal">
+    <h4 class="modal-title h_thin" translate>Transaction details</h4>
+    <ul class="firstList">
+      <li ng-if="!btx.hasMultiplesOutputs && btx.addressTo && btx.addressTo != 'N/A'"
+          ng-click="copyAddress(btx.addressTo)">
+        <svg-icon title="vertical_align_bottom"></svg-icon>
+        <strong translate>To</strong>
+        <div class="value">
+                      <span ng-if="btx.merchant">
+                        <span ng-show="btx.merchant.pr.ca"><i class="fi-lock color-greeni"></i> {{btx.merchant.domain}}</span>
+                        <span ng-show="!btx.merchant.pr.ca"><i class="fi-unlock color-yellowi"></i> {{btx.merchant.domain}}</span>
+                      </span>
+          <span ng-if="!btx.merchant">
+                        <span ng-show="btx.labelTo">{{btx.labelTo}}</span>
+                        <div ng-show="!btx.labelTo" class="enable_text_select">{{transactionAddress(btx.addressTo).fullName}}</div>
+                      </span>
+        </div>
+      </li>
+
+      <li ng-show="btx.hasMultiplesOutputs" ng-click="showMultiplesOutputs = !showMultiplesOutputs">
+        <strong translate>Recipients</strong>
+        <div class="value">{{btx.recipientCount}}
+          <svg-icon ng-show="showMultiplesOutputs" title="keyboard_arrow_up"></svg-icon>
+          <svg-icon ng-show="!showMultiplesOutputs" title="keyboard_arrow_down"></svg-icon>
+        </div>
+      </li>
+
+      <div class="line-b" ng-show="btx.hasMultiplesOutputs && showMultiplesOutputs"
+           ng-repeat="output in btx.outputs"
+           ng-include="'views/includes/output.html'">
+      </div>
+
+      <div ng-show="!isCordova" ng-class="{'visible': tooltipCopiedShown}"
+           class="tooltip radius tip-top" translate>
+        <svg-icon name="done"></svg-icon>
+        Copied!
+      </div>
+
+      <li ng-if="btx.action == 'received'">
+        <!--<svg-icon title="vertical_align_top"></svg-icon>-->
+        <img src="../../../public/img/svg/modal_ts_from.svg" alt="modal_ts_from_icon">
+        <div class="modal-icon-wrapper">
+        <strong translate>From</strong>
+          <div class="value" ng-repeat="address in btx.arrPayerAddresses" ng-dblclick="copyAddress(address)">
+            {{address ? address : ('Incoming transaction' | translate)}}
+          </div>
+        </div>
+      </li>
+
+      <li ng-if="btx.action == 'received'">
+        <!--<svg-icon title="vertical_align_bottom"></svg-icon>-->
+        <img src="../../../public/img/svg/modal_ts_to.svg" alt="modal_ts_to_icon">
+        <div class="modal-icon-wrapper">
+        <strong translate>To</strong>
+        <div class="value" ng-dblclick="copyAddress(btx.my_address)">
+          {{btx.my_address}}
+        </div>
+        </div>
+      </li>
+
+      <li ng-show="btc.message">
+        <svg-icon title="textsms"></svg-icon>
+        <strong translate>Note</strong>
+        <div class="value">{{btx.message}}</div>
+      </li>
+
+      <li ng-if="btx.action == 'invalid'">
+        <div class="color_red center" translate>
+          This transaction has become invalid; possibly due to a double spend attempt.
+        </div>
+      </li>
+
+      <li ng-if="btx.time">
+        <!--<svg-icon style="top: -1px;" title="date_range"></svg-icon>-->
+        <img src="../../../public/img/svg/modal_ts_date.svg" alt="modal_ts_date_icon">
+        <div class="modal-icon-wrapper">
+        <strong translate>Date</strong>
+        <div class="value">
+          <time>{{ btx.time * 1000 | amDateFormat:'MM/DD/YYYY HH:mm a'}}</time>
+          <time>({{ btx.time * 1000 | amTimeAgo}})</time>
+        </div>
+        </div>
+      </li>
+      <li>
+        <!--<svg-icon title="crop_square"></svg-icon>-->
+        <img src="../../../public/img/svg/modal_ts_unit.svg" alt="modal_ts_unit_icon">
+        <div class="modal-icon-wrapper">
+        <strong translate>Unit</strong>
+        <div class="value">
+          <a ng-click="openInExplorer()">{{btx.unit}}</a>
+        </div>
+        </div>
+      </li>
+      <li ng-if="btx.message && btx.action != 'received'">
+        <strong translate>Note</strong>:
+        <div class="value">{{btx.message}}</div>
+      </li>
+      <li ng-if="btx.merchant">
+        <strong translate>Merchant message</strong>:
+        <div class="value">
+          {{btx.merchant.pr.pd.memo}}
+        </div>
+      </li>
+    </ul>
+
+    <h4 class="h_thin" translate>Transaction status</h4>
+    <ul class="transaction-status-list" style="margin-bottom: 5px;">
+      <li ng-if="btx.time" class="first-row">
+        <!--<svg-icon title="hourglass_empty"></svg-icon>-->
+        <div class="modal-icon-wrapper">
+        <img src="../../../public/img/svg/modal_ts_status.svg" alt="modal_ts_status_icon">
+        <span class="tx-status-list-title"><strong translate>Status</strong></span>
+        </div>
+        <div class="value right tx-status-list-title">
+          <span class="text-warning newWarning" ng-show="!btx.confirmations || btx.confirmations == 0" translate>Unconfirmed</span>
+          <span class="label newWarning" ng-show="btx.confirmations" translate>Confirmed</span>
+        </div>
+      </li>
+      <li ng-show="btx.action != 'received'">
+        <svg-icon title="call_split"></svg-icon>
+        <strong translate>Fee</strong>:
+        <div class="value right">{{btx.feeStr}}</div>
+      </li>
+      <li class="last-row">
+        <!--<svg-icon title="dag-symbol"></svg-icon>-->
+        <div class="modal-icon-wrapper">
+        <img src="../../../public/img/svg/modal_ts_amount.svg" alt="modal_ts_amount_icon">
+        <span class="tx-status-list-title"><strong translate>Amount</strong></span>
+        </div>
+        <div class="value right newValue">{{(btx.action === 'invalid' ? '-' : ((btx.action === 'received' ? '+' : '-')
+          + btx.amountStr))}}
+        </div>
+      </li>
+    </ul>
+    <button class="btn btn_red tiny" ng-if="showMakeNewPayment" ng-click="makeNewPayment()">
+      <!--<svg-icon name="make-new-payment"></svg-icon>-->
+      <img class="make-new-pay-img" src="../../../public/img/svg/modal_make_new_pay.svg" alt="modal_make_new_pay_icon">
+      <span class="payment-text" translate>Make new payment</span>
+    </button>
+  </div>
+</div>

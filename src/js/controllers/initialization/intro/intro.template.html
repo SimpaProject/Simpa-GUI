@@ -1,0 +1,64 @@
+<div class="intro_content content newIntroContent">
+    <button ng-show="intro.active_index !== 2" ui-sref="intro_confirm" class="btn btn_red skip_button">❌</button>
+
+    <div class="intro_content_body">
+        <div class="icons_states_swiper">
+            <ks-swiper-container pagination-is-active="true"
+                                 swiper="intro.swiper"
+                                 on-ready="intro.onReadySwiper(swiper)"
+                                 override-parameters="{'slidesPerView': 1, 'spaceBetween': 0, 'centeredSlides': true}">
+                <ks-swiper-slide class="swiper-slide">
+                                    <img src="../../../../../public/img/logo_intro.svg" style="position: absolute;top: 12%;left: 33%;z-index: 999;margin: 0 auto; width: 33%;" >
+                  <div class="intro-img-wrapper">
+
+                    <img src="../../../../../public/img/fast.jpg" alt="secure">
+                    <h3 class="swiperSlideInfo">
+                      SimpaWallet is darn fast
+                    </h3>
+                    <div class="layer"></div>
+                    <div class="layer-2"></div>
+                  </div>
+                    <div class="icons_states_swiper_info">
+                         <p>Up to 700x faster<br/> than most alternative solutions!</p>
+                    </div>
+                </ks-swiper-slide>
+                <ks-swiper-slide class="swiper-slide">
+                                    <img src="../../../../../public/img/logo_intro.svg" style="position: absolute;top: 12%;left: 33%;z-index: 999;margin: 0 auto; width: 33%;" >
+                  <div class="intro-img-wrapper">
+
+                    <img src="../../../../../public/img/commision.jpg" alt="fast">
+                    <h3 class="swiperSlideInfo">
+                      Simpa is small commision
+                    </h3>
+                    <div class="layer"></div>
+                    <div class="layer-2"></div>
+                  </div>
+                    <div class="icons_states_swiper_info">
+                        <p>Simpa has a predominantly small commission <br /> that does not depend on the amount sent</p>
+                    </div>
+                </ks-swiper-slide>
+                <ks-swiper-slide class="swiper-slide">
+                                    <img src="../../../../../public/img/logo_intro.svg" style="position: absolute;top: 12%;left: 33%;z-index: 999;margin: 0 auto; width: 33%;" >
+                  <div class="intro-img-wrapper">
+
+                    <img src="../../../../../public/img/easy.jpg" alt="foryou">
+                    <h3 class="swiperSlideInfo">
+                      Simpa is easy
+                    </h3>
+                    <div class="layer"></div>
+                    <div class="layer-2"></div>
+                  </div>
+                    <div class="icons_states_swiper_info">
+                        <p>Even a not very intelligent person  <br />can cope with this</p>
+                    </div>
+                </ks-swiper-slide>
+            </ks-swiper-container>
+        </div>
+
+        <div class="intro_content_trigger">
+            <button ng-show="intro.active_index === 0" ng-click="intro.nextSlide()" class="btn btn_red">Got it</button>
+            <button ng-show="intro.active_index === 1" ng-click="intro.nextSlide()" class="btn btn_red">Awesome</button>
+            <button ng-show="intro.active_index === 2" ui-sref="intro_confirm" class="btn btn_red-full">i like Simpa</button>
+        </div>
+    </div>
+</div>

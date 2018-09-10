@@ -1,0 +1,134 @@
+$main_color: #0c022d;
+//$main_color: #3296dc;
+$new_main_color: #5d2d73;
+$violet: #643885;
+$red: #d51f26;
+$green: #48be18;
+
+$gray: #777;
+$black: #4b6178;
+
+$warning: #ffa500;
+$gold: #ffc153;
+
+$nav_bar_height: 50px;
+
+
+@mixin gradientBackground($colorFrom, $colorTo, $directionStart, $directionEnd){
+  background: linear-gradient(to $directionEnd, $colorFrom 0%,$colorTo 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$colorFrom, endColorstr=$colorTo,GradientType=0 );
+}
+
+.transition{
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.animation_rotate{
+  animation-name: ckw;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+  display: inline-block;
+}
+
+@keyframes ckw {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.slideInDown {
+  -webkit-animation-name: slideInDown;
+  animation-name: slideInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@-webkit-keyframes slideInDown {
+  0% {
+    -webkit-transform: translateY(-10%);
+    transform: translateY(-10%);
+    visibility: visible;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slideInDown {
+  0% {
+    -webkit-transform: translateY(-10%);
+    transform: translateY(-10%);
+    visibility: visible;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+//@font-face {
+//  font-family: "Roboto";
+//  src: url("../font/Roboto-Thin.ttf") format("truetype");
+//  font-weight: 100;
+//  font-style: normal;
+//}
+//@font-face {
+//  font-family: "Roboto";
+//  src: url("../font/Roboto-ThinItalic.ttf") format("truetype");
+//  font-weight: 100;
+//  font-style: italic;
+//}
+//@font-face {
+//  font-family: "Roboto";
+//  src: url("../font/Roboto-LightItalic.ttf") format("truetype");
+//  font-weight: 100;
+//  font-style: italic;
+//}
+//@font-face {
+//  font-family: "Roboto";
+//  src: url("../font/Roboto-Medium.ttf") format("truetype");
+//  font-weight: 600;
+//  font-style: normal;
+//}
+//@font-face {
+//  font-family: "Roboto";
+//  src: url("../font/Roboto-MediumItalic.ttf") format("truetype");
+//  font-weight: 600;
+//  font-style: italic;
+//}
+@font-face {
+  font-family: "RobotoRegular";
+  src: url("../font/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+//@font-face {
+//  font-family: "Roboto";
+//  src: url("../font/Roboto-Italic.ttf") format("truetype");
+//  font-weight: 400;
+//  font-style: italic;
+//}
+@font-face {
+  font-family: "RobotoBold";
+  src: url("../font/Roboto-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+//@font-face {
+//  font-family: "Roboto";
+//  src: url("../font/Roboto-BoldItalic.ttf") format("truetype");
+//  font-weight: 700;
+//  font-style: italic;
+//}
+
+$font: RobotoRegular, "Helvetica Neue", Helvetica, Arial, sans-serif;

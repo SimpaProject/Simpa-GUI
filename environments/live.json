@@ -1,0 +1,12 @@
+{
+  "ENV": {
+    "environment": "live",
+    "explorerUrl": "look.simpa.gb.net",
+    "TIMESTAMPER_ADDRESS": "I2ADHGP4HL6J37NQAD73J7E5SKFIXJOT",
+    "projectNumber": "21052017819",
+    "hub": "hub.simpa.gb.net",
+    "MERCHANT_INTEGRATION_API" : "https://api.dagpay.io/api/invoices",
+    "universalLinkHost": "simpa.gb.net",
+    "applicationName": "SimpaWallet"
+  }
+}

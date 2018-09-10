@@ -1,0 +1,299 @@
+@import "../../../css/variables";
+
+.contacts {
+  &.newContacts{
+    margin: 40px 0 0;
+    .swiper-container {
+      background: #fff;
+      .circles-ground {
+        img {
+          position: absolute;
+          top: -85px;
+          right: -31px;
+        }
+      }
+      .circles-ground-2{
+        img{
+          position: absolute;
+          left: -30px;
+          top: -1px;
+        }
+      }
+      .circles-ground-3{
+        img{
+          position: absolute;
+          right: -30px;
+          bottom: -129px;
+        }
+      }
+    }
+      .swiper_tabs_menu {
+        //.shadow{
+        //  width: 50%;
+        //  height: 50px;
+        //  background: transparent;
+        //  /* z-index: -1; */
+        //  position: absolute;
+        //  top: 51px;
+        //  box-shadow: -1px 1px 3px 2px #888;
+        //  right: 0;
+        //  &:not(.active){
+        //    left: 0;
+        //  }
+        //}
+
+        ul {
+          padding: 0;
+          background: #f5f5f5;
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg{
+              margin-right: 10px;
+            }
+            span {
+              border-bottom: none;
+              color: #000;
+              font-size: 14px;
+              text-transform: none;
+              &::first-letter{
+                text-transform: uppercase;
+              }
+            }
+            &:not(.active) {
+              svg{
+                path{
+                  fill: #bebebe;
+                }
+              }
+              background: #f5f5f5;
+              box-shadow: inset -1px -2px 1px 0 #ddd;
+            }
+            &.active{
+              svg{
+                path{
+                  fill: $violet;
+                }
+              }
+              box-shadow: inset -1px 1px 3px 0 #ddd;
+              background: #fff;
+              span {
+                color: #5b3e89;
+              }
+            }
+          }
+        }
+      }
+    .no_contacts_message{
+      p {
+        font-size: 16px;
+        line-height: 21px;
+        color: #666;
+        &.select-contact-text{
+          line-height: 18px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .swiper-container {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 100%;
+    bottom: 0;
+  }
+
+  .search-container {
+    margin: 15px;
+    z-index: 1000001;
+  }
+
+  &.no_contacts {
+    background: #f1f1f1;
+  }
+
+  .no_contacts_message {
+    @extend .slideInDown;
+    margin: 30px;
+    margin-top: 40px;
+    text-align: center;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+
+    &.ng-leave {
+      display: none;
+    }
+
+    svg {
+      width: 100px;
+      height: 100px;
+    }
+
+    p {
+      color: #777;
+      font-size: 14px;
+      line-height: 18px;
+      margin: 20px 0;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      svg-icon.svg-icon-star_border {
+        color: $gold;
+
+        svg {
+          position: relative;
+          top: -1px;
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+
+  .contacts_search_bar {
+    margin: 10px 15px;
+    position: relative;
+
+    svg-icon {
+      color: #b3bbc4;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      &.search_icon{
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        margin-top: -8px;
+      }
+    }
+
+    .clear_icon{
+      padding: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 40px;
+    }
+
+    .contacts_search_bar_input {
+      border: none;
+      padding: 10px 40px;
+      width: 100%;
+      background: #f1f1f1;
+      max-width: 100%;
+      font-size: 13px;
+      color: #666;
+      font-weight: 400;
+    }
+  }
+
+  .contacts_list {
+    height: calc(100% - 60px);
+    position: relative;
+    margin-top: 70px;
+
+    .contacts_list_group {
+      padding: 20px;
+    }
+
+    .contacts_list_letter {
+      color: #a1a7af;
+      margin: 10px 0;
+    }
+
+    table {
+      margin: 0;
+      width: 100%;
+
+      td {
+        border-bottom: 1px solid #eee;
+        border-top: 1px solid #eee;
+        text-align: left;
+        line-height: inherit;
+        padding: 15px 20px;
+        vertical-align: middle;
+
+        &.contacts_list_contact_favorite {
+          text-align: center;
+          width: 60px;
+          padding: 0;
+
+          .contacts_list_contact_favorite_trigger {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+
+            svg-icon {
+              @extend .transition;
+              position: absolute;
+              left: 0;
+              top: 0;
+              height: 100%;
+              width: 100%;
+              color: $gold;
+
+              &.svg-icon-star {
+                transform: scale(0.3);
+                opacity: 0;
+              }
+
+              &.svg-icon-star_border {
+                transform: scale(1);
+                opacity: 1;
+              }
+            }
+
+            &.selected {
+              svg-icon {
+                &.svg-icon-star {
+                  transform: scale(1);
+                  opacity: 1;
+                }
+
+                &.svg-icon-star_border {
+                  transform: scale(1.5);
+                  opacity: 0;
+                }
+              }
+            }
+          }
+        }
+
+        &.contacts_list_contact_info {
+          position: relative;
+          padding-left: 60px;
+
+          .avatar {
+            margin-right: 20px;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            margin-top: -20px;
+          }
+
+          .contacts_list_contact_info_full_name {
+            font-weight: 700;
+            height: 20px;
+          }
+
+          .contacts_list_contact_info_email {
+            font-size: 12px;
+            color: #888;
+            height: 16px;
+          }
+        }
+      }
+    }
+  }
+}
