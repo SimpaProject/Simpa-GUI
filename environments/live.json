@@ -1,7 +1,7 @@
 {
   "ENV": {
     "environment": "live",
-    "explorerUrl": "look.simpa.gb.net",
+    "explorerUrl": "hub.simpa.gb.net:4000",
     "TIMESTAMPER_ADDRESS": "I2ADHGP4HL6J37NQAD73J7E5SKFIXJOT",
     "projectNumber": "21052017819",
     "hub": "hub.simpa.gb.net",

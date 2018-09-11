@@ -174,12 +174,12 @@
         const visibleWidth = window.innerWidth - 50;
         const str = value.toString().split('.');
 
-        const length = str[0].length + ((str[1] || 0).length / 2);
+        const length = str[0].length + ((str[1] || 0).length / 2)+6;
         const size = ((visibleWidth / length) < 70 ? ((visibleWidth / length) + 0) : 80);
 
         return { 'font-size': `${(!type ? size : size / 2)}px` };
       }
-      return { 'font-size': '80px' };
+      return { 'font-size': '25px' };
     };
 
     vm.showBalance = () => {

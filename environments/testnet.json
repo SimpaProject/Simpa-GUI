@@ -2,9 +2,9 @@
   "ENV": {
     "environment": "testnet",
     "isTestnet": true,
-    "explorerUrl": "hub.simpa.gb.net:1180",
+    "explorerUrl": "hub.simpa.gb.net:4000",
     "TIMESTAMPER_ADDRESS": "OPNUXBRSSQQGHKQNEPD2GLWQYEUY5XLD",
-    "hub": "hub.simpa.gb.net:1180",
+    "hub": "hub.simpa.gb.net",
     "MERCHANT_INTEGRATION_API" : "https://test-api.dagpay.io/api/invoices",
     "projectNumber": "459454964929",
     "universalLinkHost": "hub.simpa-wallet.app:4000",

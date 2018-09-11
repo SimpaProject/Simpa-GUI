@@ -63,6 +63,8 @@
         &.transaction_status_blocked {
           .transaction_status_icon, .transaction_sum {
             color: $red;
+						float: right;
+            width: 100%;
           }
         }
 
@@ -73,12 +75,16 @@
           }
           .transaction_sum {
             color: $new_main_color;
+			float: right;
+            width: 100%;
           }
         }
 
         &.transaction_status_sent {
           .transaction_status_icon, .transaction_sum {
             color: $warning;
+			float: right;
+            width: 100%;
           }
         }
 
@@ -92,7 +98,7 @@
           }
 
           &.transaction_status {
-            width: 50px;
+            /* width: 50px; */
           }
 
           &.transaction_sum {

@@ -23,8 +23,8 @@
           console.log(img.width, img.height);
           img.onload = () => {
             const ctx = canvas.getContext('2d');
-            const x = 200;
-            const y = 200;
+            const x = -500;
+            const y = -500;
             ctx.drawImage(img, x, y, img.width, img.height);
             callback(null, canvas);
           };
