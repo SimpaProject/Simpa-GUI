@@ -1,0 +1,11 @@
+#!/bin/sh
+cp /usr/share/Dagcoin-wallet@type/dagcoin-wallet@type.desktop /usr/share/applications/dagcoin-wallet@type.desktop
+for user in /home/*
+do
+  if test -d "${user}/Desktop"
+  then
+    cp /usr/share/applications/dagcoin-wallet.desktop ${user}/Desktop/dagcoin-wallet.desktop
+    chmod +x ${user}/Desktop/dagcoin-wallet.desktop
+    echo Copied "${user}/Desktop"
+  fi
+done

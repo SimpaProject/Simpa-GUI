@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/simpa-wallet/simpa-wallet.svg?branch=master)](https://travis-ci.org/simpa-wallet/simpa-wallet)
 
-SimpaWallet as cryptocurrency is built on a new technology called TRF chain, offering scalable, low cost and secure payments. SimpaWallet uses byteball network as an underlying platform. Our mission is to provide alternative currency for everyday using, focusing on Asian market to help unbanked people manage their funds better. By doing that, SimpaWallet will be the most widely used open source cryptocurrency in the world.
+SimpaWallet as cryptocurrency is built on a new technology called TRF chain, offering scalable, low cost and secure payments. SimpaWallet uses simpa network as an underlying platform. Our mission is to provide alternative currency for everyday using, focusing on Asian market to help unbanked people manage their funds better. By doing that, SimpaWallet will be the most widely used open source cryptocurrency in the world.
 
 ## Main Features
 

@@ -1,4 +1,4 @@
-// todo: suppressed new-cap rule, because coode is coming from byteball core, should be fixed later.
+// todo: suppressed new-cap rule, because coode is coming from simpa core, should be fixed later.
 /** @namespace Client.API */
 
 const ecdsaSig = require('core/signature.js');
