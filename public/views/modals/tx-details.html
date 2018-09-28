@@ -48,7 +48,7 @@
 
       <li ng-if="btx.action == 'received'">
         <!--<svg-icon title="vertical_align_top"></svg-icon>-->
-        <img src="../../../public/img/svg/modal_ts_from.svg" alt="modal_ts_from_icon">
+        <img src="img/svg/modal_ts_from.svg" alt="modal_ts_from_icon">
         <div class="modal-icon-wrapper">
         <strong translate>From</strong>
           <div class="value" ng-repeat="address in btx.arrPayerAddresses" ng-dblclick="copyAddress(address)">
@@ -59,7 +59,7 @@
 
       <li ng-if="btx.action == 'received'">
         <!--<svg-icon title="vertical_align_bottom"></svg-icon>-->
-        <img src="../../../public/img/svg/modal_ts_to.svg" alt="modal_ts_to_icon">
+        <img src="img/svg/modal_ts_to.svg" alt="modal_ts_to_icon">
         <div class="modal-icon-wrapper">
         <strong translate>To</strong>
         <div class="value" ng-dblclick="copyAddress(btx.my_address)">
@@ -82,7 +82,7 @@
 
       <li ng-if="btx.time">
         <!--<svg-icon style="top: -1px;" title="date_range"></svg-icon>-->
-        <img src="../../../public/img/svg/modal_ts_date.svg" alt="modal_ts_date_icon">
+        <img src="img/svg/modal_ts_date.svg" alt="modal_ts_date_icon">
         <div class="modal-icon-wrapper">
         <strong translate>Date</strong>
         <div class="value">
@@ -93,7 +93,7 @@
       </li>
       <li>
         <!--<svg-icon title="crop_square"></svg-icon>-->
-        <img src="../../../public/img/svg/modal_ts_unit.svg" alt="modal_ts_unit_icon">
+        <img src="img/svg/modal_ts_unit.svg" alt="modal_ts_unit_icon">
         <div class="modal-icon-wrapper">
         <strong translate>Unit</strong>
         <div class="value">
@@ -118,7 +118,7 @@
       <li ng-if="btx.time" class="first-row">
         <!--<svg-icon title="hourglass_empty"></svg-icon>-->
         <div class="modal-icon-wrapper">
-        <img src="../../../public/img/svg/modal_ts_status.svg" alt="modal_ts_status_icon">
+        <img src="img/svg/modal_ts_status.svg" alt="modal_ts_status_icon">
         <span class="tx-status-list-title"><strong translate>Status</strong></span>
         </div>
         <div class="value right tx-status-list-title">
@@ -134,7 +134,7 @@
       <li class="last-row">
         <!--<svg-icon title="dag-symbol"></svg-icon>-->
         <div class="modal-icon-wrapper">
-        <img src="../../../public/img/svg/modal_ts_amount.svg" alt="modal_ts_amount_icon">
+        <img src="img/svg/modal_ts_amount.svg" alt="modal_ts_amount_icon">
         <span class="tx-status-list-title"><strong translate>Amount</strong></span>
         </div>
         <div class="value right newValue">{{(btx.action === 'invalid' ? '-' : ((btx.action === 'received' ? '+' : '-')
@@ -144,7 +144,7 @@
     </ul>
     <button class="btn btn_red tiny" ng-if="showMakeNewPayment" ng-click="makeNewPayment()">
       <!--<svg-icon name="make-new-payment"></svg-icon>-->
-      <img class="make-new-pay-img" src="../../../public/img/svg/modal_make_new_pay.svg" alt="modal_make_new_pay_icon">
+      <img class="make-new-pay-img" src="img/svg/modal_make_new_pay.svg" alt="modal_make_new_pay_icon">
       <span class="payment-text" translate>Make new payment</span>
     </button>
   </div>

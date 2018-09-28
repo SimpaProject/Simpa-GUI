@@ -45,11 +45,17 @@ ios-debug:
 	open ../byteballbuilds/project-IOS/platforms/ios/SimpaWallet.xcodeproj
 
 android-prod:
-	cordova/build.sh ANDROID simpa-wallet --clear live
-	cd ./cordova/project-ANDROID  && cordova build --release android
+#	cordova/build.sh ANDROID simpa-wallet --clear live
+#	cd ./cordova/project-ANDROID  && cordova build --release android
+		cordova/build.sh ANDROID simpa-wallet --clear live
+
+	cd ./cordova/project-ANDROID && cordova build --release android
+	
+	
+	
 #   keytool -genkey -v -keystore <keystore_name>.keystore -alias <keystore alias> -keyalg RSA -keysize 2048 -validity 10000
-	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore simpa-wallet.jks -tsa http://sha256timestamp.ws.symantec.com/sha256/timestamp -signedjar ../byteballbuilds/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed.apk  ../byteballbuilds/project-ANDROID/platforms/android/build/outputs/apk/android-release-unsigned.apk simpa-wallet
-	$(ANDROID_HOME)/build-tools/25.0.3/zipalign -v 4 ../byteballbuilds/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed.apk ../byteballbuilds/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed-aligned.apk
+	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore simpa-wallet.jks -tsa http://sha256timestamp.ws.symantec.com/sha256/timestamp -signedjar ./cordova/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed.apk  ./cordova/project-ANDROID/platforms/android/build/outputs/apk/android-release-unsigned.apk simpa-wallet
+	$(ANDROID_HOME)/build-tools/25.0.3/zipalign -v 4 ./cordova/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed.apk ./cordova/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed-aligned.apk
 
 android-prod-tn:
 	cordova/build.sh ANDROID simpa-wallet --clear testnet
@@ -57,11 +63,9 @@ android-prod-tn:
 	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore simpa-wallet.jks -tsa http://sha256timestamp.ws.symantec.com/sha256/timestamp -signedjar ../byteballbuilds/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed.apk  ../byteballbuilds/project-ANDROID/platforms/android/build/outputs/apk/android-release-unsigned.apk simpa-wallet
 	$(ANDROID_HOME)/build-tools/25.0.3/zipalign -v 4 ../byteballbuilds/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed.apk ../byteballbuilds/project-ANDROID/platforms/android/build/outputs/apk/android-release-signed-aligned.apk
 
-android-debug-fast:
-	cordova/build.sh ANDROID simpa-wallet --clear live
-#	cp ./etc/beep.ogg ./cordova/project/plugins/phonegap-plugin-barcodescanner/src/android/LibraryProject/res/raw/beep.ogg
-	cd ./cordova/project-ANDROID && cordova run android --device
-#	cd ../byteballbuilds/project-ANDROID && cordova build android
+android-debug:
+	cordova/build.sh ANDROID dagcoin --clear live
+	cd ./cordova/project-ANDROID  && cordova build android
 
 android-debug-fast-tn:
 	cordova/build.sh ANDROID simpa-wallet --dbgjs testnet

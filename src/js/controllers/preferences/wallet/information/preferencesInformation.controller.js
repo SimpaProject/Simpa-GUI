@@ -117,7 +117,7 @@
       fc.getListOfBalancesOnAddresses((listOfBalances) => {
         const balanceList = listOfBalances.map((row) => {
           if (row.asset === 'base' || row.asset === ENV.TRAVELFLEX_ASSET) {
-            const assetName = row.asset !== 'base' ? 'TRF' : 'base';
+            const assetName = row.asset !== 'base' ? 'SMP' : 'base';
             const unitName = row.asset !== 'base' ? config.dagUnitName : config.unitName;
             row.amount = `${profileService.formatAmount(row.amount, assetName, { dontRound: true })} ${unitName}`;
             return row;

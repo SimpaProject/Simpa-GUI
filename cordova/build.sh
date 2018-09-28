@@ -21,14 +21,14 @@ PROJECT="$BUILDDIR/project-$1"
 
 CURRENT_OS=$1
 UNIVERSAL_LINK_HOST=false
-APPLICATION_NAME=Dagcoin
+APPLICATION_NAME=SimpaWallet
 
 if [ -z "CURRENT_OS" ]
 then
  echo "Build.sh WP8|ANDROID|IOS"
 fi
 
-CLEAR=false
+CLEAR=true
 DBGJS=false
 
 if [[ $2 == "--clear" || $3 == "--clear" ]]
@@ -45,11 +45,11 @@ if $DBGJS
 then
   UNIVERSAL_LINK_HOST=$(node -p -e "require('$BUILDDIR/../environments/testnet.json').ENV.universalLinkHost")
   APPLICATION_NAME=$(node -p -e "require('$BUILDDIR/../environments/testnet.json').ENV.applicationName")
-  ANDROID_PACKAGE=org.dagcoin.client.tn
+  ANDROID_PACKAGE=net.gb.simpa.client.tn
 else
   UNIVERSAL_LINK_HOST=$(node -p -e "require('$BUILDDIR/../environments/live.json').ENV.universalLinkHost")
   APPLICATION_NAME=$(node -p -e "require('$BUILDDIR/../environments/live.json').ENV.applicationName")
-  ANDROID_PACKAGE=org.dagcoin.client
+  ANDROID_PACKAGE=net.gb.simpa.client
 fi
 echo -e "${Green}OK UNIVERSAL_LINK_HOST is set to ${UNIVERSAL_LINK_HOST}${CloseColor}"
 echo -e "${Green}OK APPLICATION_NAME is set to ${APPLICATION_NAME}${CloseColor}"
@@ -63,7 +63,7 @@ command -v cordova >/dev/null 2>&1 || { echo >&2 "Cordova is not present, please
 if $CLEAR
 then
 	if [ -d $PROJECT ]; then
-	 rm -rf $PROJECT
+		rm -rf $PROJECT
 	fi
 fi
 
@@ -75,7 +75,7 @@ if [ ! -d $PROJECT ]; then
   mkdir $PROJECT
 	cd $BUILDDIR
 	echo -e "${OpenColor}${Green}* Creating project... ${CloseColor}"
-	cordova create project-$1 ${ANDROID_PACKAGE} Dagcoin
+	cordova create project-$1 ${ANDROID_PACKAGE} SimpaWallet
 	checkOK
 
 	cd $PROJECT
@@ -101,7 +101,8 @@ if [ ! -d $PROJECT ]; then
 
 	echo -e "${OpenColor}${Green}* Installing plugins... ${CloseColor}"
 
-
+#  cordova plugin add https://github.com/florentvaldelievre/virtualartifacts-webIntent.git
+#  checkOK
 
 	if [ $CURRENT_OS == "IOS" ]; then
 		cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner.git
@@ -198,8 +199,6 @@ echo -e "${OpenColor}${Green}* Removing and recreating www folder${CloseColor}"
 rm -rf $PROJECT/www
 mkdir $PROJECT/www
 cp -af public/** $PROJECT/www
-
-
 checkOK
 
 echo -e "${OpenColor}${Green}* Copying initial database...${CloseColor}"
@@ -214,42 +213,34 @@ cd $BUILDDIR
 
 echo -e "${Green}* Changing config.xml...${CloseColor}"
 cp config.xml $PROJECT/config.xml
-
-
-
 sed "s/@UNIVERSAL_LINK_HOST/${UNIVERSAL_LINK_HOST}/g;s/@APPLICATION_NAME/${APPLICATION_NAME}/g;s/@ANDROID_PACKAGE/${ANDROID_PACKAGE}/g" < config.xml > $PROJECT/config.xml
 checkOK
 
 if [ $CURRENT_OS == "ANDROID" ]; then
 	echo -e "Android project!!!"
 
-	cat $BUILDDIR/android/android.css >> $PROJECT/www/css/dagcoin.css
+	cat $BUILDDIR/android/android.css >> $PROJECT/www/css/simpa-wallet.css
 
 	mkdir -p $PROJECT/platforms/android/res/xml/
-	mkdir -p  $PROJECT/platforms/android/res/values/
-	mkdir -p  $PROJECT/platforms/android/src/org/dagcoin/client
 	checkOK
 
   # gcm needs google-services.json. google-services.json is downloaded from firebase web site.
   if $DBGJS
   then
-    cp $BUILDDIR/android/testnet/google-services.json $PROJECT/platforms/android/google-services.json
+    cp android/testnet/google-services.json $PROJECT/platforms/android/google-services.json
     checkOK
   else
-    cp $BUILDDIR/android/live/google-services.json $PROJECT/platforms/android/google-services.json
+    cp android/live/google-services.json $PROJECT/platforms/android/google-services.json
     checkOK
   fi
 
   # new cordova-android needs colors.xml
-	cp android/colors.xml $PROJECT/platforms/android/res/values/colors.xml
+	cp android/colors.xml $PROJECT/platforms/android/res/values
 	checkOK
 
-  cp -R $PROJECT/platforms/android/app/src/main/java/org/dagcoin/client/*  $PROJECT/platforms/android/src/org/dagcoin/client
 
-  cp -R $PROJECT/platforms/android/app/src/main/res/values/* $PROJECT/platforms/android/res/values/
-
-  cp android/AndroidManifest.xml $PROJECT/platforms/android/AndroidManifest.xml
-  checkOK
+#  cp android/AndroidManifest.xml $PROJECT/platforms/android/AndroidManifest.xml
+#  checkOK
 
 	cp android/build-extras.gradle $PROJECT/platforms/android/build-extras.gradle
 	checkOK

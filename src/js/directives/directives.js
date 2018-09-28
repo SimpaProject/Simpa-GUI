@@ -63,7 +63,7 @@
     };
   }
 
-  const TRF_AMOUNT_REGEX = /^[\d]{1,10}(\.[\d]{1,6})?$/;
+  const SMP_AMOUNT_REGEX = /^[\d]{1,10}(\.[\d]{1,6})?$/;
 
   angular.module('copayApp.directives')
   .directive('validUrl', [
@@ -277,7 +277,7 @@
         const rawValue = element.val();
         const newValue = rawValue + (charIsNumeric ? e.key : '');
 
-        if (charIsNumeric && (newValue.length > maxLength || (e.key !== '.' && e.key !== ',' && !TRF_AMOUNT_REGEX.test(newValue)))) {
+        if (charIsNumeric && (newValue.length > maxLength || (e.key !== '.' && e.key !== ',' && !SMP_AMOUNT_REGEX.test(newValue)))) {
           e.preventDefault();
         }
       });
@@ -288,7 +288,7 @@
         // So that, below comparison is made
         let rawValue = element.val();
         rawValue = rawValue && rawValue !== '' ? rawValue : `${inputValue}`;
-        return !ZERO_BEHIND_REGEX.test(rawValue) && TRF_AMOUNT_REGEX.test(rawValue);
+        return !ZERO_BEHIND_REGEX.test(rawValue) && SMP_AMOUNT_REGEX.test(rawValue);
       };
     },
   }))

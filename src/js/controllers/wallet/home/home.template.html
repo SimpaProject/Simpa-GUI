@@ -21,7 +21,7 @@
                         ng-style="homeCtrl.getFontSizeForWalletNumber(index.baseBalance.totalStr, 'sup')">
                         {{index.baseBalance.totalStr.split('.')[1]}}
                       </span>
-                  <img src="../../../../../public/img/svg/home_price.svg" alt="home_price">
+                  <img src="img/svg/home_price.svg" alt="home_price">
                 </div>
               </div>
             </div>
@@ -60,7 +60,7 @@
         <div class="start-sending" ng-style="{'background-image':'url('+randPic+')'}" ng-show="homeCtrl.noBalanceHistory && homeCtrl.balanceInited">
           <!--<div>-->
             <!--&lt;!&ndash;<svg-icon name="paperplane-buy"></svg-icon>&ndash;&gt;-->
-            <!--&lt;!&ndash;<img ng-src="../../../../../public/img/pic-{{Math.floor(Math.random() * 9)}}" alt="start_sending_home_page" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<img ng-src="img/pic-{{Math.floor(Math.random() * 9)}}" alt="start_sending_home_page" />&ndash;&gt;-->
             <!--<img ng-src="{{randPic}}" alt="start_sending_home_page" />-->
           <!--</div>-->
         </div>
@@ -113,7 +113,7 @@
       <div class="dag_transactions_list">
         <div class="dag_transactions_list_triggers">
           <div class="transactions-history">
-            <img src="../../../../../public/img/svg/transaction_history_icon.svg" alt="transaction_history_icon">
+            <img src="img/svg/transaction_history_icon.svg" alt="transaction_history_icon">
             <h4 translate>Transactions History</h4>
           </div>
           <dag-csv-history></dag-csv-history>

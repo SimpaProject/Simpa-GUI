@@ -3,7 +3,7 @@
   'use strict';
 
   /**
-   * @desc validating TRF address
+   * @desc validating SMP address
    * @example <input type="text" valid-address>
    */
   angular

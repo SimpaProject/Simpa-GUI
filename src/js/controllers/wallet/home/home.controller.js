@@ -18,7 +18,7 @@
     const viewContentLoaded = function () {
       console.log('HomeCtrl initialized');
       // $scope.randomPictures();
-      $rootScope.randPic = `../../../../../public/img/back_abstract.png`;
+      $rootScope.randPic = `img/back_abstract.png`;
       go.redirectToTabIfNeeded();
     };
     vm.initBalanceVisibility = function () {

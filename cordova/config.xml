@@ -5,10 +5,10 @@
         ios-CFBundleVersion="2.0.1">
   <name>@APPLICATION_NAME</name>
   <description>
-    Dagcoin wallet.
+    SimpaWallet.
   </description>
-  <author email="support@dagcoin.org" href="https://dagcoin.org">
-    Dagcoin
+  <author email="support@simpa.gb.net" href="https://simpa.gb.net">
+    SimpaWallet
   </author>
   <content src="index.html"/>
   <access origin="*"/>

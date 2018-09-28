@@ -37,7 +37,7 @@
               ng-blur="amountBlur()"
               input-validator>
 
-            <img class="input_icons" src="../../../../../public/img/svg/input_icon.svg" alt="input_icon">
+            <img class="input_icons" src="img/svg/input_icon.svg" alt="input_icon">
 
           </div>
 
@@ -55,14 +55,14 @@
               type="text" id="address"
               name="address"
               ng-disabled="send.blockUx || send.lockAddress"
-              ng-attr-placeholder="{{send.canSendExternalPayment() ? ('TRF address' | translate) : ('TRF address of your other wallet &#8594;' | translate)}}"
+              ng-attr-placeholder="{{send.canSendExternalPayment() ? ('SMP address' | translate) : ('SMP address of your other wallet &#8594;' | translate)}}"
               ng-model="_address" valid-address required
               ng-blur="home.formFocus(false)">
 
             <!--<a ng-click="send.openDestinationAddressModal(index.otherWallets, _address)">-->
               <!--<i class="icon icon-d icon-wallet"></i>-->
             <!--</a>-->
-            <img class="input_icons" ng-click="send.openDestinationAddressModal(index.otherWallets, _address)" src="../../../../../public/img/svg/wallet_input.svg" alt="wallet_input_icon">
+            <img class="input_icons" ng-click="send.openDestinationAddressModal(index.otherWallets, _address)" src="img/svg/wallet_input.svg" alt="wallet_input_icon">
 
           </div>
           <!--Commenting this out until binding functionality is introduced-->

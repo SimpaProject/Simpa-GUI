@@ -88,13 +88,13 @@
         };
 
         /**
-         * 'Payment request: ' + amount+ ' TRF to ' + addr
+         * 'Payment request: ' + amount+ ' SMP to ' + addr
          * @param address
          * @param amount
          */
         $scope.shareAddress = function (address, amount) {
            const options = {
-            message: `Payment request: ${amount} TRF to ${address}`, // not supported on some apps (Facebook, Instagram)
+            message: `Payment request: ${amount} SMP to ${address}`, // not supported on some apps (Facebook, Instagram)
             subject: 'Payment Request', // fi. for email
             url: `https://${ENV.universalLinkHost}/paymentRequest?address=${address}&amount=${amount}`,
             chooserTitle: 'Pick an application' // Android only, you can override the default share sheet title

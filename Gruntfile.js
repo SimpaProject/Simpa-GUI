@@ -408,7 +408,6 @@ module.exports = function (grunt) {
     browserify: {
       dist: {
         options: {
-          transform: [['babelify', { presets: ['es2015'], compact: false }]],
           exclude: ['sqlite3', 'nw.gui', 'mysql', 'ws', 'regedit', 'fsevents']
         },
         src: 'public/simpa-wallet.js',
@@ -550,7 +549,6 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['build']);
   grunt.registerTask('cordova:testnet', ['build', 'browserify']);
   grunt.registerTask('cordova:live', ['build:live', 'browserify']);
-  grunt.registerTask('cordova-prod', ['cordova', 'uglify']);
   // grunt.registerTask('prod', ['default', 'uglify']);
   grunt.registerTask('translate', ['nggettext_extract']);
   grunt.registerTask('test', ['karma:prod']);

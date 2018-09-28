@@ -39,7 +39,7 @@
         reconnectDelay: 5000,
         idleDurationMin: 4,
         settings: {
-          unitName: 'TRF',
+          unitName: 'SMP',
           unitValue: 1000000,
           unitDecimals: 6,
           unitCode: 'one',

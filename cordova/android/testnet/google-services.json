@@ -1,16 +1,16 @@
 {
   "project_info": {
     "project_number": "459454964929",
-    "firebase_url": "https://dagcoin-test-194315.firebaseio.com",
-    "project_id": "dagcoin-test-194315",
-    "storage_bucket": "dagcoin-test-194315.appspot.com"
+    "firebase_url": "https://simpa-test-194315.firebaseio.com",
+    "project_id": "simpa-test-194315",
+    "storage_bucket": "simpa-test-194315.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:459454964929:android:0ecb78475fded9fe",
         "android_client_info": {
-          "package_name": "org.dagcoin.client.tn"
+          "package_name": "net.gb.simpa.client.tn"
         }
       },
       "oauth_client": [
