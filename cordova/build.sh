@@ -43,9 +43,9 @@ fi
 
 if $DBGJS
 then
-  UNIVERSAL_LINK_HOST=$(node -p -e "require('$BUILDDIR/../environments/testnet.json').ENV.universalLinkHost")
-  APPLICATION_NAME=$(node -p -e "require('$BUILDDIR/../environments/testnet.json').ENV.applicationName")
-  ANDROID_PACKAGE=net.gb.simpa.client.tn
+   UNIVERSAL_LINK_HOST=$(node -p -e "require('$BUILDDIR/../environments/live.json').ENV.universalLinkHost")
+   APPLICATION_NAME=$(node -p -e "require('$BUILDDIR/../environments/live.json').ENV.applicationName")
+   ANDROID_PACKAGE=net.gb.simpa.client
 else
   UNIVERSAL_LINK_HOST=$(node -p -e "require('$BUILDDIR/../environments/live.json').ENV.universalLinkHost")
   APPLICATION_NAME=$(node -p -e "require('$BUILDDIR/../environments/live.json').ENV.applicationName")
@@ -89,8 +89,8 @@ if [ ! -d $PROJECT ]; then
 
 	if [ $CURRENT_OS == "IOS" ]; then
 		echo "${Green}* Adding IOS platform... ${CloseColor}"
-		cordova platforms add ios
-		checkOK
+		cordova platforms add ios@4.1.1
+        checkOK
 	fi
 
 	if [ $CURRENT_OS == "WP8" ]; then
@@ -127,7 +127,9 @@ if [ ! -d $PROJECT ]; then
 	cordova plugin add cordova-plugin-x-toast && cordova prepare
 	checkOK
 
-	phonegap local plugin add https://github.com/ibnclaudius/CordovaClipboard
+	
+	#phonegap local plugin add https://github.com/ibnclaudius/CordovaClipboard
+	cordova plugin add cordova-plugin-clipboard
 	checkOK
 
 	cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git && cordova prepare
@@ -177,19 +179,35 @@ if [ ! -d $PROJECT ]; then
 	cordova plugin add cordova-universal-links-plugin
 	checkOK
 
+
+cordova plugin add https://github.com/xJeneKx/MFileChooser.git
+checkOK
+
+cordova plugin add cordova-plugin-app-preferences
+checkOK
+
+cordova plugin add cordova-custom-config --fetch
+checkOK
+
+cordova plugin add https://github.com/kakysha/cordova-plugin-intent
+checkOK
+
+
+
+
 fi
 
 if $DBGJS
 then
 	echo -e "${Green}* Generating bundle (debug js)...${CloseColor}"
 	cd $BUILDDIR/..
-	grunt cordova:$4
+	grunt cordova:live
 	checkOK
 else
 	echo -e "${Green}* Generating bundle...${CloseColor}"
 	cd $BUILDDIR/..
 	#grunt cordova-prod byteball core has some error, so uglify doesn't work.
-	grunt cordova:$4
+	grunt cordova:live
 	checkOK
 fi
 
@@ -259,31 +277,35 @@ if [ $CURRENT_OS == "ANDROID" ]; then
   
   cd $PROJECT
   
-  echo -e "Starting cordova build"
-  cordova build android
+#  echo -e "Starting cordova build"
+#  cordova build android
 fi
 
 if [ $CURRENT_OS == "IOS" ]; then
 
 	echo "IOS project!!!"
 
-	cp -R ios $PROJECT/../
+
+	rm -rf $PROJECT/platforms/ios/www
+	mkdir -p $PROJECT/platforms/ios/www
+	cp -R $PROJECT/www/* $PROJECT/platforms/ios/www
 	checkOK
-#  mkdir -p $PROJECT/platforms/ios
-#  checkOK
-#
-#  cp ios/Byteball-Info.plist $PROJECT/platforms/ios/Byteball-Info.plist
-#  checkOK
-#
-#  mkdir -p $PROJECT/platforms/ios/Byteball/Resources/icons
-#  checkOK
-#
-#  mkdir -p $PROJECT/platforms/ios/Byteball/Resources/splash
-#  checkOK
-#
-#  cp -R ios/icons/* $PROJECT/platforms/ios/Byteball/Resources/icons
-#  checkOK
-#
-#  cp -R ios/splash/* $PROJECT/platforms/ios/Byteball/Resources/splash
-#  checkOK
+	
+ # mkdir -p $PROJECT/platforms/ios
+ # checkOK
+
+ # cp ios/Byteball-Info.plist $PROJECT/platforms/ios/Byteball-Info.plist
+ # checkOK
+
+ mkdir -p $PROJECT/platforms/ios/SimpaWallet/Resources/icons
+ checkOK
+
+ mkdir -p $PROJECT/platforms/ios/SimpaWallet/Resources/splash
+ checkOK
+
+ cp -R ios/icons/* $PROJECT/platforms/ios/SimpaWallet/Resources/icons
+ checkOK
+
+ cp -R ios/splash/* $PROJECT/platforms/ios/SimpaWallet/Resources/splash
+ checkOK
 fi

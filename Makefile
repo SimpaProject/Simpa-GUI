@@ -37,12 +37,12 @@ prepare-package-deb-tn:
 
 ios-prod:
 	cordova/build.sh IOS simpa-wallet --clear live
-	cd ../byteballbuilds/project-IOS && cordova build ios
+	cd ./cordova/project-IOS && cordova build ios
 
 ios-debug:
 	cordova/build.sh IOS simpa-wallet --dbgjs testnet
-	cd ../byteballbuilds/project-IOS  && cordova build ios
-	open ../byteballbuilds/project-IOS/platforms/ios/SimpaWallet.xcodeproj
+	cd ./cordova/project-IOS  && cordova build ios
+	# open ./cordova/project-IOS/platforms/ios/SimpaWallet.xcodeproj
 
 android-prod:
 #	cordova/build.sh ANDROID simpa-wallet --clear live

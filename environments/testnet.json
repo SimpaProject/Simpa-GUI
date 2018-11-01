@@ -7,9 +7,9 @@
     "hub": "hub.simpa.gb.net",
     "MERCHANT_INTEGRATION_API" : "https://test-api.dagpay.io/api/invoices",
     "projectNumber": "459454964929",
-    "universalLinkHost": "hub.simpa-wallet.app:4000",
+    "universalLinkHost": "simpa.gb.net",
     "FAUCET_CORRESPONDENCE_CODE": "A6thOoiPnsPGKgMj4G/OYkh4d7WR/MX3r1k2tG/WJPof@look.simpa.gb.net:4000/#0000",
     "FAUCET_ADDRESS": "0JMVEW6BBLT26R5C66HRN7YAP2Z77XCX7",
-    "applicationName": "TSimpaWallet"
+    "applicationName": "SimpaWallet"
   }
 }
